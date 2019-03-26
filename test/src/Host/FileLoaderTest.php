@@ -62,13 +62,5 @@ class FileLoaderTest extends TestCase
      * @param $name
      * @return Host|null
      */
-    private function getHost($name)
-    {
-        foreach ($this->hosts as $host) {
-            if ($host->getHostname() === $name) {
-                return $host;
-            }
-        }
-        return null;
-    }
+    
 }

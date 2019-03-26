@@ -112,66 +112,11 @@ class Client
         return $output;
     }
 
-    private function parseExitStatus(Process $process)
-    {
-        $output = $process->getOutput();
-        preg_match('/\[exit_code:(.*?)\]/', $output, $match);
+    
 
-        if (!isset($match[1])) {
-            return -1;
-        }
+    
 
-        $exitCode = (int)$match[1];
-        return $exitCode;
-    }
+    
 
-    private function initMultiplexing(Host $host)
-    {
-        $sshArguments = $host->getSshArguments()->withMultiplexing($host);
-
-        if (!$this->isMultiplexingInitialized($host, $sshArguments)) {
-            if ($this->output->isVeryVerbose()) {
-                $this->pop->writeln(Process::OUT, $host->getHostname(), 'ssh multiplexing initialization');
-            }
-
-            $output = $this->exec("ssh -N $sshArguments $host");
-
-            if ($this->output->isVeryVerbose()) {
-                $this->pop->writeln(Process::OUT, $host->getHostname(), $output);
-            }
-        }
-
-        return $sshArguments;
-    }
-
-    private function isMultiplexingInitialized(Host $host, Arguments $sshArguments)
-    {
-        $process = new Process("ssh -O check $sshArguments $host 2>&1");
-        $process->run();
-        return (bool)preg_match('/Master running/', $process->getOutput());
-    }
-
-    private function exec($command, &$exitCode = null)
-    {
-        $descriptors = [
-            ['pipe', 'r'],
-            ['pipe', 'w'],
-            ['pipe', 'w'],
-        ];
-
-        // Don't read from stderr, there is a bug in OpenSSH_7.2p2 (stderr doesn't closed with ControlMaster)
-
-        $process = proc_open($command, $descriptors, $pipes);
-        if (is_resource($process)) {
-            fclose($pipes[0]);
-            $output = stream_get_contents($pipes[1]);
-            fclose($pipes[1]);
-            fclose($pipes[2]);
-            $exitCode = proc_close($process);
-        } else {
-            $output = 'proc_open failure';
-            $exitCode = 1;
-        }
-        return $output;
-    }
+    
 }

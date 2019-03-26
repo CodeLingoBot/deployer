@@ -159,24 +159,7 @@ class TaskCommand extends Command
         }
     }
 
-    private function parseOptions(array $options)
-    {
-        foreach ($options as $option) {
-            list($name, $value) = explode('=', $option);
-            $value = $this->castValueToPhpType($value);
-            $this->deployer->config->set($name, $value);
-        }
-    }
+    
 
-    private function castValueToPhpType($value)
-    {
-        switch ($value) {
-            case 'true':
-                return true;
-            case 'false':
-                return false;
-            default:
-                return $value;
-        }
-    }
+    
 }

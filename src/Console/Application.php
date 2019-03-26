@@ -67,13 +67,7 @@ class Application extends Console
     /**
      * {@inheritdoc}
      */
-    private function selfUpdateCommand()
-    {
-        $selfUpdate = new PharUpdateCommand('self-update');
-        $selfUpdate->setDescription('Updates deployer.phar to the latest version');
-        $selfUpdate->setManifestUri('https://deployer.org/manifest.json');
-        return $selfUpdate;
-    }
+    
 
     /**
      * {@inheritdoc}

@@ -125,57 +125,9 @@ class Arguments
      * @return string ControlPath
      * @throws Exception
      */
-    private function generateControlPath(Host $host)
-    {
-        $port = empty($host->getPort()) ? '' : ':' . $host->getPort();
-        $connectionData = "$host$port";
-        $tryLongestPossible = 0;
-        $controlPath = '';
-        do {
-            switch ($tryLongestPossible) {
-                case 1:
-                    $controlPath = "~/.ssh/deployer_%C";
-                    break;
-                case 2:
-                    $controlPath = "~/deployer_$connectionData";
-                    break;
-                case 3:
-                    $controlPath = "~/deployer_%C";
-                    break;
-                case 4:
-                    $controlPath = "~/mux_%C";
-                    break;
-                case 5:
-                    throw new Exception("The multiplexing control path is too long. Control path is: $controlPath");
-                default:
-                    $controlPath = "~/.ssh/deployer_$connectionData";
-            }
-            $tryLongestPossible++;
-        } while (strlen($controlPath) > 104); // Unix socket max length
+    
 
-        return $controlPath;
-    }
-
-    private function buildFlagsFromArray($flags)
-    {
-        $boolFlags = array_filter(array_map(function ($key, $value) {
-            if (is_int($key)) {
-                return $value;
-            }
-
-            if (null === $value) {
-                return $key;
-            }
-
-            return false;
-        }, array_keys($flags), $flags));
-
-        $valueFlags = array_filter($flags, function ($key, $value) {
-            return is_string($key) && is_string($value);
-        }, ARRAY_FILTER_USE_BOTH);
-
-        return array_merge(array_fill_keys($boolFlags, null), $valueFlags);
-    }
+    
 
     public function __toString()
     {

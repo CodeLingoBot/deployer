@@ -125,16 +125,10 @@ class Configuration
      * @param string[] $matches
      * @return mixed
      */
-    private function parseCallback(array $matches)
-    {
-        return isset($matches[1]) ? $this->get($matches[1]) : null;
-    }
+    
 
     /**
      * @param mixed $var
      */
-    private function isClosure($var): bool
-    {
-        return is_object($var) && ($var instanceof \Closure);
-    }
+    
 }

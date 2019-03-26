@@ -66,10 +66,7 @@ class RuntimeException extends Exception
         parent::__construct($message, $exitCode);
     }
 
-    private function getExitCodeText(int $exitCode): string
-    {
-        return Process::$exitCodes[$exitCode] ?? 'Unknown error';
-    }
+    
 
     public function getHostname(): string
     {

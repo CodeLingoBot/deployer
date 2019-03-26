@@ -82,35 +82,7 @@ class Initializer
      *
      * @throws IOException
      */
-    private function checkDirectoryBeforeInitialize($directory)
-    {
-        if (!file_exists($directory)) {
-            set_error_handler(function ($errCode, $errStr) use ($directory) {
-                $parts = explode(':', $errStr, 2);
-                $errorMessage = isset($parts[1]) ? trim($parts[1]) : 'Undefined';
-
-                throw new IOException(sprintf(
-                    'Could not create directory "%s". %s',
-                    $directory,
-                    $errorMessage
-                ), $errCode);
-            });
-
-            mkdir($directory, 0775);
-
-            restore_error_handler();
-        } elseif (!is_dir($directory)) {
-            throw new IOException(sprintf(
-                'Can not create directory. The path "%s" already exist.',
-                $directory
-            ));
-        } elseif (!is_writable($directory)) {
-            throw new IOException(sprintf(
-                'The directory "%s" is not writable.',
-                $directory
-            ));
-        }
-    }
+    
 
     /**
      * Check the file before initialize
@@ -120,17 +92,5 @@ class Initializer
      *
      * @throws IOException
      */
-    private function checkFileBeforeInitialize($directory, $file)
-    {
-        $filePath = $directory . '/' . $file;
-
-        if (file_exists($filePath)) {
-            throw new IOException(sprintf(
-                'The file "%s" already exist.',
-                $filePath
-            ));
-        }
-
-        touch($filePath);
-    }
+    
 }

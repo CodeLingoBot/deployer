@@ -176,13 +176,5 @@ class InitializerTest extends TestCase
      *
      * @return array
      */
-    private function createTemporaryFile()
-    {
-        $tmpFileName = md5(uniqid(mt_rand(), true)) . '.php';
-        $tmpDir = sys_get_temp_dir() . '/' . uniqid();
-        mkdir($tmpDir, 0775);
-        $tmpFilePath = $tmpDir . '/' . $tmpFileName;
-
-        return [$tmpDir, $tmpFileName, $tmpFilePath];
-    }
+    
 }

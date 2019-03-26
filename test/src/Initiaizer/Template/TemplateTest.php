@@ -55,16 +55,5 @@ RESOURCE;
      *
      * @return \Deployer\Initializer\Template\Template|\PHPUnit_Framework_MockObject_MockObject
      */
-    private function createMockForFileResourceTemplate()
-    {
-        return $this->getMockForAbstractClass(
-            Template::class,
-            [],
-            '',
-            true,
-            true,
-            true,
-            []
-        );
-    }
+    
 }

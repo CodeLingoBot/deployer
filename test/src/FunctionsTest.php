@@ -146,10 +146,5 @@ class FunctionsTest extends TestCase
         self::assertEquals('hello', $output);
     }
 
-    private function taskToNames($tasks)
-    {
-        return array_map(function (Task $task) {
-            return $task->getName();
-        }, $tasks);
-    }
+    
 }

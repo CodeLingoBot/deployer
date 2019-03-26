@@ -38,24 +38,7 @@ class Host
         $this->sshArguments = new Arguments();
     }
 
-    private function initOptions()
-    {
-        if ($this->port) {
-            $this->sshArguments = $this->sshArguments->withFlag('-p', $this->port);
-        }
-
-        if ($this->configFile) {
-            $this->sshArguments = $this->sshArguments->withFlag('-F', $this->configFile);
-        }
-
-        if ($this->identityFile) {
-            $this->sshArguments = $this->sshArguments->withFlag('-i', $this->getIdentityFile());
-        }
-
-        if ($this->forwardAgent) {
-            $this->sshArguments = $this->sshArguments->withFlag('-A');
-        }
-    }
+    
 
     /**
      * Returns pair user/hostname
@@ -93,10 +76,7 @@ class Host
     /**
      * @param mixed $hostname
      */
-    private function setRealHostname(string $hostname)
-    {
-        $this->realHostname = preg_replace('/\/.+$/', '', $hostname);
-    }
+    
 
     /**
      * @return string

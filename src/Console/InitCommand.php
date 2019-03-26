@@ -155,22 +155,5 @@ class InitCommand extends Command
      *
      * @return Initializer
      */
-    private function createInitializer()
-    {
-        $initializer = new Initializer();
-
-        $initializer->addTemplate('Common', new CommonTemplate());
-        $initializer->addTemplate('Laravel', new LaravelTemplate());
-        $initializer->addTemplate('Symfony', new SymfonyTemplate());
-        $initializer->addTemplate('Yii', new YiiTemplate());
-        $initializer->addTemplate('Yii2 Basic App', new Yii2BasicAppTemplate());
-        $initializer->addTemplate('Yii2 Advanced App', new Yii2AdvancedAppTemplate());
-        $initializer->addTemplate('Zend Framework', new ZendTemplate());
-        $initializer->addTemplate('CakePHP', new CakeTemplate());
-        $initializer->addTemplate('CodeIgniter', new CodeIgniterTemplate());
-        $initializer->addTemplate('Drupal', new DrupalTemplate());
-        $initializer->addTemplate('TYPO3', new Typo3Template());
-
-        return $initializer;
-    }
+    
 }

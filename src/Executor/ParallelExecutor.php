@@ -120,36 +120,7 @@ class ParallelExecutor implements ExecutorInterface
      *
      * @param Host[] $hosts
      */
-    private function runTask(array $hosts, Task $task): int
-    {
-        $processes = [];
-
-        foreach ($hosts as $host) {
-            if ($task->shouldBePerformed($host)) {
-                $processes[$host->getHostname()] = $this->getProcess($host, $task);
-                if ($task->isOnce()) {
-                    $task->setHasRun();
-                }
-            }
-        }
-
-        $callback = function (string $type, string $host, string $output) {
-            $output = rtrim($output);
-            if (strlen($output) !== 0) {
-                $this->output->writeln($output);
-            }
-        };
-
-        $this->startProcesses($processes);
-
-        while ($this->areRunning($processes)) {
-            $this->gatherOutput($processes, $callback);
-            usleep(1000);
-        }
-        $this->gatherOutput($processes, $callback);
-
-        return $this->gatherExitCodes($processes);
-    }
+    
 
     /**
      * Get process for task on host.
@@ -250,38 +221,7 @@ class ParallelExecutor implements ExecutorInterface
     /**
      * Generate options and arguments string.
      */
-    private function generateOptions(): string
-    {
-        /** @var string[] $inputs */
-        $inputs = [
-            (string) (new VerbosityString($this->output)),
-        ];
+    
 
-        $userDefinition = $this->console->getUserDefinition();
-        // Get user arguments
-        foreach ($userDefinition->getArguments() as $argument) {
-            $inputs[] = Argument::toString($this->input, $argument);
-        }
-
-        // Get user options
-        foreach ($userDefinition->getOptions() as $option) {
-            $inputs[] = Option::toString($this->input, $option);
-        }
-
-        return implode(' ', array_filter($inputs, static function (string $item): bool {
-            return $item !== '';
-        }));
-    }
-
-    private function generateArguments(): string
-    {
-        $arguments = '';
-
-        if ($this->input->hasArgument('stage')) {
-            // Some people rely on stage argument, so pass it to worker too.
-            $arguments .= $this->input->getArgument('stage');
-        }
-
-        return $arguments;
-    }
+    
 }
